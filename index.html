@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokédex</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <div class="search-bar">
+    <input type="text" v-model="searchText" @input="searchPokemon" placeholder="Procure seu pokémon">
+  </div>
+  <div class="pokemon-container" v-if="filteredPokemon">
+    <div class="pokemon-card" :class="getTypeClass(filteredPokemon.types[0].type.name, filteredPokemon.types[1]?.type.name)">
+      <p>Nome: {{ filteredPokemon.name }}</p>
+      <p>ID: {{ filteredPokemon.id }}</p>
+      <div class="pokemon-img">
+        <img :src="filteredPokemon.sprites.other.showdown.front_default" :alt="`Image of ${filteredPokemon.name}`">
+      </div>
+      <p>Tipo(s): {{ filteredPokemon.types.map(type => type.type.name).join(', ') }}</p>
+      <p>Peso: {{ filteredPokemon.weight }}</p>
+    </div>
+  </div>
+  <div class="loading" v-if="loading">
+    <h1>Loading...</h1>
+  </div>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
